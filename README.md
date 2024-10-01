@@ -25,12 +25,21 @@ Fork of Dr. Keunhong Park's LatentFusion. Off all of the systems we have looked 
 TODO
 
 
-## Steps:
+## Setup:
 
 * Install miniforge as shown here: https://github.com/conda-forge/miniforge
 
-* Create a conda enviornment using the updated ```environment_updated.yml``` file: ```mamba env create -n latentfusion -f environment_updated.yml```
+* Create the ```latentfusion``` environment: ```environment_updated.yml``` file: ```mamba env create -n latentfusion -f environment_updated.yml```
 
-```mamba env update -n latentfusion -f environment_updated.yml```
+* Activate env: ```mamba activate latentfusion```
 
-```mamba env remove -n latentfusion```
+* Install pytorch with cuda support: ```mamba install pytorch torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia```
+
+* Test to make sure CUDA is found
+
+```bash
+python3
+import torch
+torch.cuda.is_available()
+```
+
