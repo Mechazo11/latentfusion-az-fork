@@ -32,3 +32,5 @@ TODO
 * Create a conda enviornment using the updated ```environment_updated.yml``` file: ```mamba env create -n latentfusion -f environment_updated.yml```
 
 ```mamba env update -n latentfusion -f environment_updated.yml```
+
+```mamba env remove -n latentfusion```

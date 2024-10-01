@@ -3,6 +3,7 @@ name: latentfusion
 channels:
   - defaults
 dependencies:
+  - python=3.10 
   - _libgcc_mutex=0.1=conda_forge
   - _openmp_mutex=4.5=1_llvm
   - aggdraw
@@ -18,7 +19,6 @@ dependencies:
   - cffi
   - chardet
   - cryptography
-  - cudatoolkit
   - cycler
   - dbus
   - decorator
