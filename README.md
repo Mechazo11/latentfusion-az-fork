@@ -8,20 +8,18 @@ Fork of Dr. Keunhong Park's LatentFusion. Off all of the systems we have looked 
 
 * [paper](https://arxiv.org/pdf/2406.04316)
 
-* [video](https://www.youtube.com/watch?v=T6qSMYmlCj4)
+* [video2](https://www.youtube.com/watch?v=tlzcq1KYXd8): This one goes in much in depth details
+
+* [video1](https://www.youtube.com/watch?v=T6qSMYmlCj4): This one mainly shows results
 
 * [project_website](https://latentfusion.github.io/)
 
+# Testing LatentFusion with available data
+
+
+![alt text](figs/: https://www.youtube.com/watch?v=ltxN3PITD0w.png)
+
 
 ## Changelogs
-
-TODO
-
-
-## MOPED dataset indepth study:
-
-TODO
-
-## Procedure for adding new objects to the network
 
 TODO
