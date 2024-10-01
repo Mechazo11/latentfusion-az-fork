@@ -31,7 +31,7 @@ TODO
 
 * Create the ```latentfusion``` environment: ```environment_updated.yml``` file: ```mamba env create -n latentfusion -f environment_updated.yml```
 
-* Activate env: ```mamba activate latentfusion```
+* Activate env using the shell script: ```source env.sh```. It ensures this directory is added to the ```$PYTHONPATH``` variable.
 
 * Install pytorch with cuda support: ```mamba install pytorch torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia```
 

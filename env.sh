@@ -2,5 +2,5 @@
 
 export PYTHONPATH=$(pwd):$PYTHONPATH
 
-conda activate latentfusion
+mamba activate latentfusion
 

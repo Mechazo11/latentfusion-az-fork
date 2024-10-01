@@ -12,6 +12,9 @@ venv
 ._.DS_Store
 *.swp
 
+# Ignore all .pth files
+weights/*.pth
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
