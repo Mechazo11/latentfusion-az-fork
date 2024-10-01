@@ -23,3 +23,10 @@ Fork of Dr. Keunhong Park's LatentFusion. Off all of the systems we have looked 
 ## Changelogs
 
 TODO
+
+
+## Steps:
+
+* Install miniforge as shown here: https://github.com/conda-forge/miniforge
+
+* Create a conda enviornment using the updated ```environment_updated.yml``` file: ```mamba env create -n latentfusion -f environment.yml```
