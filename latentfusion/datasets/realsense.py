@@ -1,3 +1,4 @@
+# Imports
 import json
 from pathlib import Path
 
@@ -243,7 +244,8 @@ class RealsenseDataset(Dataset):
         image = Image.open(path)
         new_shape = (int(image.width * self.image_scale), int(image.height * self.image_scale))
         image = image.resize(new_shape)
-        image = np.array(image, dtype=np.bool)
+        #image = np.array(image, dtype=np.bool) # Numpy 1.24 throws depriciation error
+        image = np.array(image, dtype=bool)
         if len(image.shape) > 2:
             image = image[:, :, 0]
         return image
