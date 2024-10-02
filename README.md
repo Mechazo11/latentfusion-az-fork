@@ -16,8 +16,11 @@ Fork of Dr. Keunhong Park's LatentFusion. Off all of the systems we have looked 
 
 # Testing LatentFusion with available data
 
-
 ![alt text](figs/: https://www.youtube.com/watch?v=ltxN3PITD0w.png)
+
+## Quick notes on MOPED
+
+
 
 
 ## Setup:
