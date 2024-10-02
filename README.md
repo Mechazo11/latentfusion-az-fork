@@ -20,11 +20,6 @@ Fork of Dr. Keunhong Park's LatentFusion. Off all of the systems we have looked 
 ![alt text](figs/: https://www.youtube.com/watch?v=ltxN3PITD0w.png)
 
 
-## Changelogs
-
-TODO
-
-
 ## Setup:
 
 * Install miniforge as shown here: https://github.com/conda-forge/miniforge
@@ -33,7 +28,11 @@ TODO
 
 * Activate env using the shell script: ```source env.sh```. It ensures this directory is added to the ```$PYTHONPATH``` variable.
 
-* Install pytorch with cuda support: ```mamba install pytorch torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia```
+* First ensure Nvidia driver is installed and nvcc is configured to find the appropriate cuda driver
+
+* Install pytorch with cuda support. This installs on system level: ```pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124```
+
+* Remove if installation fails: ```
 
 * Test to make sure CUDA is found
 
