@@ -35,7 +35,12 @@ def _masks_to_centroids(masks):
 def _erode_mask(mask, size=5):
     device = mask.device
     eroded = mask.cpu().squeeze(0).numpy()
-    eroded = morphology.binary_erosion(eroded, selem=morphology.disk(size))
+    # This throws this error: binary_erosion() got an unexpected keyword selem
+    #eroded = morphology.binary_erosion(eroded, selem=morphology.disk(size))
+    
+    eroded = morphology.binary_erosion(eroded, footprint=morphology.disk(size))
+    
+    
     eroded = torch.tensor(eroded, device=device, dtype=torch.bool).unsqueeze(0)
     if len(eroded) < 10:
         return mask
