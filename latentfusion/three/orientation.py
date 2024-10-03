@@ -1,7 +1,6 @@
+# Import
 import math
-
 import torch
-
 from latentfusion import three
 from latentfusion.three import quaternion as q
 
@@ -84,8 +83,9 @@ def random_quat_from_ray(forward, up=None):
         up = torch.tensor(up).unsqueeze(0).expand(n, 3)
         up = up + forward
         down = -up
-    right = three.normalize(torch.cross(down, forward))
-    down = three.normalize(torch.cross(forward, right))
+    # right = three.normalize(torch.linalg.cross(down, forward)) # UserWarning: Using torch.linalg.cross without specifying the dim arg is deprecated.
+    right = three.normalize(torch.linalg.cross(down, forward))
+    down = three.normalize(torch.linalg.cross(forward, right))
 
     mat = torch.stack([right, down, forward], dim=1)
 
@@ -116,7 +116,7 @@ def sample_segment_quats(n, up, min_angle, max_angle):
 
     rays = sample_segment_rays(n, up, min_angle, max_angle)
 
-    pivot = torch.cross(up, rays)
+    pivot = torch.linalg.cross(up, rays)
     angles = torch.acos(three.inner_product(up, rays))
     quat = q.from_axis_angle(pivot, angles)
 
@@ -155,7 +155,7 @@ def evenly_distributed_points(n: int, hemisphere=False, pole=(0.0, 0.0, 1.0)):
             points = points
         else:
             # Otherwise take the cross product as the rotation axis.
-            rot_axis = torch.cross(pole, default_pole)
+            rot_axis = torch.linalg.cross(pole, default_pole)
             rot_angle = torch.acos(three.inner_product(pole, default_pole))
             rot_quat = three.quaternion.from_axis_angle(rot_axis, rot_angle)
             points = three.quaternion.rotate_vector(rot_quat, points)

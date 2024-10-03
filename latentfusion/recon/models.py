@@ -197,7 +197,7 @@ class Sculptor(nn.Module):
         }
 
     def forward(self, x, camera: Camera):
-        #with autocast(enabled=self.training): # Deprication warning
+        #with autocast(enabled=self.training): # Depricated in Pytorch 1.10
         with torch.autocast("cuda", enabled=self.training):
 
             z = self.image_encoder(x)
@@ -405,7 +405,8 @@ class Photographer(nn.Module):
         if z_obj_mid is None and self.skip_connections:
             raise ValueError("z_obj_intermediate required for skip connections.")
 
-        with autocast(enabled=self.training):
+        #with autocast(enabled=self.training): # Depricated in Pytorch 1.10
+        with torch.autocast("cuda", enabled=self.training):
             if self.skip_connections:
                 # Transform intermediate representations to this camera.
                 z_cam_mid = [self.transform_block(z_cam, camera) for z_cam in z_cam_mid]

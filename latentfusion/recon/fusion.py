@@ -1,3 +1,4 @@
+# Import
 import abc
 from typing import Dict, Tuple, Any
 
@@ -12,7 +13,6 @@ from latentfusion.modules.gru import ConvGRUCell
 from latentfusion.modules.lstm import ConvLSTMCell
 from latentfusion.recon import utils
 from latentfusion.three.batchview import bv2b, b2bv
-
 
 def get_fuser(fuser_type, in_channels, cube_size, block_config=None,
               conv_module=EqualizedConv3d):
@@ -37,10 +37,8 @@ def get_fuser(fuser_type, in_channels, cube_size, block_config=None,
     else:
         raise ValueError(f"Unknown fuser type {type!r}")
 
-
 def from_checkpoint(checkpoint):
     return globals()[checkpoint['type']].from_checkpoint(checkpoint)
-
 
 def pool_tensor(tensor, pool_type, dim=0):
     if pool_type == 'max':
@@ -55,7 +53,6 @@ def pool_tensor(tensor, pool_type, dim=0):
         raise ValueError(f"Unknown pool_type value {pool_type}")
 
     return tensor
-
 
 class Fuser(nn.Module, abc.ABC):
 
@@ -73,7 +70,6 @@ class Fuser(nn.Module, abc.ABC):
             -> Tuple[torch.Tensor, Dict[str, Any]]:
         raise NotImplemented
 
-
 class PoolFuser(Fuser):
 
     def __init__(self, pool_type='mean'):
@@ -83,14 +79,12 @@ class PoolFuser(Fuser):
     def forward(self, z_obj, z_cam_mid, z_obj_mid, camera):
         return pool_tensor(z_obj, self.pool_type, dim=1), {}
 
-
 class ConcatFuser(Fuser):
 
     def forward(self, z_obj, z_cam_mid, z_obj_mid, camera):
         N, V, C, D, H, W = z_obj.size()
         z_fused = z_obj.reshape(N, 1, V * C, D, H, W)
         return z_fused, {}
-
 
 class BlendFuser(Fuser):
 
@@ -148,7 +142,6 @@ class BlendFuser(Fuser):
         z_fused = torch.sum(z_obj * blend_weights, dim=1, keepdim=True)
         return z_fused, extra
 
-
 class GRUFuser(Fuser):
 
     def __init__(self, in_channels, cube_size=1.0, conv_module=EqualizedConv3d):
@@ -182,7 +175,8 @@ class GRUFuser(Fuser):
         }
 
     def forward(self, z_obj, z_cam_mid, z_obj_mid, camera):
-        with autocast(enabled=self.training):
+        # with autocast(enabled=self.training): # Depricated in Pytorch 1.10
+        with torch.autocast("cuda", enabled=self.training):
             num_views = z_obj.shape[1]
 
             h = z_obj[:, 0]
@@ -199,7 +193,6 @@ class GRUFuser(Fuser):
             h = h.unsqueeze(1)
 
             return h, {}
-
 
 class LSTMFuser(Fuser):
 
