@@ -1,12 +1,10 @@
+# Imports
 import math
-
 import torch
 from torch import nn
-
 from latentfusion import three
 from latentfusion.losses import PerceptualLoss
 import torchvision.models
-
 from latentfusion.modules.geometry import Camera
 
 

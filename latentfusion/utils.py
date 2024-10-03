@@ -1,3 +1,4 @@
+# Imports
 import itertools
 import json
 import pathlib
@@ -88,7 +89,8 @@ def pbar(*args, **kwargs):
 
 def trange(*args, **kwargs):
     if latentfusion.is_notebook():
-        kwargs['ncols'] = '100%'
+        #kwargs['ncols'] = '100%' # Throws massive error: TypeError: unsupported operand type(s) for -: 'str' and 'int'
+        kwargs['ncols'] = 100 # Set ncols as integer
     else:
         kwargs['dynamic_ncols'] = True
     return tqdm.auto.trange(*args, **kwargs)

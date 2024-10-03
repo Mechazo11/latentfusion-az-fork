@@ -59,7 +59,6 @@ def load_from_config(config, model, **kwargs):
     else:
         raise ValueError(f"Unknown estimator type {config['type']}")
 
-
 def load_schedules_from_config(config):
     config = copy.copy(config)
     if config.pop('type') == 'exponential':
@@ -344,7 +343,12 @@ class CrossEntropyPoseEstimator(PoseEstimator):
 
         prev_gmm = None
         ranking = []
+        # Tqdm >=4.64.0 throws an error here.
+        # ncols is set to string here
         pbar = utils.trange(self.num_iters)
+        
+        print(f"ncols: {getattr(pbar, 'ncols', 'Not set')}, type: {type(getattr(pbar, 'ncols', 'Not set'))}")
+        
         for step in pbar:
             # Refine pose.
             _num_elites = int(self.elite_sched.get(step))
@@ -356,6 +360,7 @@ class CrossEntropyPoseEstimator(PoseEstimator):
             delta = self._track_best_items(ranking, step, cameras, losses)
             if delta > 0:
                 camera_history.append((losses, Camera.cat([c for c, e, step in ranking])))
+            
             pbar.set_description(f"best_error={ranking[0][1]:.05f}, num_elite={_num_elites}")
 
         # gmm_camera = self._params_to_camera(torch.tensor(gmm.means_, dtype=torch.float32),
