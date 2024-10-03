@@ -344,11 +344,9 @@ class CrossEntropyPoseEstimator(PoseEstimator):
         prev_gmm = None
         ranking = []
         # Tqdm >=4.64.0 throws an error here.
-        # ncols is set to string here
+        # ncols is set to string here, fixed in latentfusion/utils.py file
         pbar = utils.trange(self.num_iters)
-        
-        print(f"ncols: {getattr(pbar, 'ncols', 'Not set')}, type: {type(getattr(pbar, 'ncols', 'Not set'))}")
-        
+         
         for step in pbar:
             # Refine pose.
             _num_elites = int(self.elite_sched.get(step))

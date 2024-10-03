@@ -1,3 +1,4 @@
+# Imports
 import torch
 from torch import nn
 from torch.cuda.amp import autocast
@@ -196,7 +197,9 @@ class Sculptor(nn.Module):
         }
 
     def forward(self, x, camera: Camera):
-        with autocast(enabled=self.training):
+        #with autocast(enabled=self.training): # Deprication warning
+        with torch.autocast("cuda", enabled=self.training):
+
             z = self.image_encoder(x)
 
             # Projection from 2D to 3D.
