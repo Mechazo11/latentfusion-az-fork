@@ -199,7 +199,7 @@ dependencies:
     - tensorboard-plugin-wit
     - tensorboardx
     - toml
-    - tqdm
+    - tqdm==4.63.0
     - transforms3d
     - trimesh
     - ujson
