@@ -618,6 +618,7 @@ class GradientPoseEstimator(PoseEstimator):
         converge_count = 0
         camera_history = []
 
+        # Hangs jupyter notebook
         for step in pbar:
             for optimizer in optimizers:
                 optimizer.zero_grad()
