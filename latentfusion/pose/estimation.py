@@ -344,25 +344,12 @@ class CrossEntropyPoseEstimator(PoseEstimator):
         prev_gmm = None
         ranking = []
         
-        # # Tqdm >=4.64.0 throws an error here.
-        # # ncols is set to string here, fixed in latentfusion/utils.py file
-        # pbar = utils.trange(self.num_iters)
+        # Tqdm >=4.64.0 throws an error here.
+        # tqdm <=4.63.0 is recommended
+        # ncols is set to string here, fixed in latentfusion/utils.py file
+        pbar = utils.trange(self.num_iters)
          
-        # for step in pbar:
-        #     # Refine pose.
-        #     _num_elites = int(self.elite_sched.get(step))
-        #     cameras, losses = self._refine_pose(z_obj, target_obs, prev_gmm, gmm,
-        #                                         num_elites=_num_elites,
-        #                                         camera_init=camera_init)
-        #     prev_gmm = gmm
-        #     gmm = self._create_gmm(self._camera_to_params(cameras).cpu())
-        #     delta = self._track_best_items(ranking, step, cameras, losses)
-        #     if delta > 0:
-        #         camera_history.append((losses, Camera.cat([c for c, e, step in ranking])))
-            
-        #     pbar.set_description(f"best_error={ranking[0][1]:.05f}, num_elite={_num_elites}")
-
-        for step in range(self.num_iters):
+        for step in pbar:
             # Refine pose.
             _num_elites = int(self.elite_sched.get(step))
             cameras, losses = self._refine_pose(z_obj, target_obs, prev_gmm, gmm,
@@ -374,8 +361,22 @@ class CrossEntropyPoseEstimator(PoseEstimator):
             if delta > 0:
                 camera_history.append((losses, Camera.cat([c for c, e, step in ranking])))
             
-            # Optional: You can still print progress manually if needed
-            print(f"Step: {step}, best_error={ranking[0][1]:.05f}, num_elite={_num_elites}")
+            pbar.set_description(f"best_error={ranking[0][1]:.05f}, num_elite={_num_elites}")
+
+        # for step in range(self.num_iters):
+        #     # Refine pose.
+        #     _num_elites = int(self.elite_sched.get(step))
+        #     cameras, losses = self._refine_pose(z_obj, target_obs, prev_gmm, gmm,
+        #                                         num_elites=_num_elites,
+        #                                         camera_init=camera_init)
+        #     prev_gmm = gmm
+        #     gmm = self._create_gmm(self._camera_to_params(cameras).cpu())
+        #     delta = self._track_best_items(ranking, step, cameras, losses)
+        #     if delta > 0:
+        #         camera_history.append((losses, Camera.cat([c for c, e, step in ranking])))
+            
+        #     # Optional: You can still print progress manually if needed
+        #     print(f"Step: {step}, best_error={ranking[0][1]:.05f}, num_elite={_num_elites}")
 
         # gmm_camera = self._params_to_camera(torch.tensor(gmm.means_, dtype=torch.float32),
         #                                     camera_init=camera_init)
