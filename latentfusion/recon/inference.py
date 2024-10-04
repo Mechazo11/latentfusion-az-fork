@@ -122,7 +122,9 @@ class LatentFusionModel(object):
         return out
 
     def render_latent_object(self, z_obj, camera, return_latent=True, apply_mask=True):
-        """Reconstruct 3D object from 3D latent space using latenfusion.recon.models.Photographer class."""
+        """Reconstruct image of a 3D object from 3D latent space using latenfusion.recon.models.Photographer class.
+        The image is generated in 2D image plane.
+        """
         y_opt, z_opt, _ = self.photographer.decode(z_obj, camera, return_latent=return_latent,
                                                    apply_mask=apply_mask)
         if return_latent:
