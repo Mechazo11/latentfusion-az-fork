@@ -1,3 +1,4 @@
+# Imports
 import json
 import math
 from pathlib import Path
@@ -69,7 +70,7 @@ def sample_eval_observations(renderer, scene, x_bound=(0, 0), y_bound=(0, 0), z_
 
 
 class Observation(object):
-
+    """Each Observation is a input vector x"""
     @classmethod
     def from_dataset(cls, dataset, inds=None):
         if inds is None:
@@ -88,6 +89,7 @@ class Observation(object):
                    camera)
 
     def __init__(self, color, depth, mask, camera, **kwargs):
+        """Class constructor"""
         if len(color.shape) == 3:
             color = color.unsqueeze(0)
         if len(depth.shape) == 3:
